@@ -1,3 +1,0 @@
-
-# http://guide.openenergymonitor.org
-
