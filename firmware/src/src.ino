@@ -32,8 +32,8 @@
 #include <JeeLib.h>                                                   // https://github.com/openenergymonitor/jeelib
 #include <avr/pgmspace.h>
 #include <util/parity.h>
-ISR(WDT_vect) { Sleepy::watchdogEvent(); }                            // Attached JeeLib sleep function to Atmega328 watchdog -enables MCU to be put into sleep mode inbetween readings to reduce power consumption
-
+// ISR(WDT_vect) { Sleepy::watchdogEvent(); }                            // Attached JeeLib sleep function to Atmega328 watchdog -enables MCU to be put into sleep mode inbetween readings to reduce power consumption
+// #FIXME
 
 //----------------------------emonRX Firmware Version---------------------------------------------------------------------------------------------------------------
 // Changelog: https://github.com/openenergymonitor/emonpi/blob/master/firmware/readme.md
@@ -62,6 +62,7 @@ byte RF_freq=RF12_433MHZ;                                        // Frequency of
 byte nodeID = 5;                                                 // emonpi node ID
 int networkGroup = 210;
 
+/*
 typedef struct {
 int power1;
 int power2;
@@ -70,7 +71,7 @@ int Vrms;
 int temp[MaxOnewire];
 unsigned long pulseCount;
 } PayloadTX;                                                    // create JeeLabs RF packet structure - a neat way of packaging data for RF comms
-PayloadTX emonPi;
+PayloadTX emonPi;*/
 //-------------------------------------------------------------------------------------------------------------------------------------------
 
 // RF Global Variables
