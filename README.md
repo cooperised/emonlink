@@ -1,6 +1,6 @@
-# emonPi
+# emonRx
 
-[![Build Status](https://travis-ci.org/openenergymonitor/emonpi.svg?branch=master)](https://travis-ci.org/openenergymonitor/emonpi)
+[![Build Status](https://api.travis-ci.com/cooperised/emonrx.svg?branch=master)](https://travis-ci.com/cooperised/emonrx)
 
 ## Raspberry Pi based energy Monitoring Unit
 
