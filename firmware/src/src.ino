@@ -46,6 +46,7 @@ const unsigned long BAUD_RATE=    38400;
 const int TIME_BETWEEN_READINGS=  5000;                             // Time between readings (ms)
 const unsigned long RF_RESET_PERIOD=        60000;                            // Time (ms) between RF resets (hack to keep RFM60CW alive)
 
+bool RF_STATUS=                 true;                                  // Turn RF on and off
 
 //-------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------
@@ -74,6 +75,9 @@ unsigned long pulseCount;
 PayloadTX emonPi;*/
 //-------------------------------------------------------------------------------------------------------------------------------------------
 
+unsigned long now =0;
+unsigned long last_rf_rest=0;                                  // Record time of last RF reset
+
 // RF Global Variables
 static byte stack[RF12_MAXDATA+4], top, sendLen, dest;           // RF variables
 static char cmd;
@@ -90,7 +94,6 @@ const char helpText1[] PROGMEM =                                 // Available Se
 "  <n> c      - set collect mode (advanced, normally 0)\n"
 "  ...,<nn> a - send data packet to node <nn>, request ack\n"
 "  ...,<nn> s - send data packet to node <nn>, no ack\n"
-"  ...,<n> p  - Set AC Adapter Vcal 1p = UK, 2p = USA\n"
 "  v          - Show firmware version\n"
 "  <n> q      - set quiet mode (1 = don't report bad packets)\n"
 ;

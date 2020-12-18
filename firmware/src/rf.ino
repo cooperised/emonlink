@@ -107,13 +107,6 @@ static void handleInput (char c) {
         }
         break;
 
-      case 'p': // set Vcc Cal 1=UK/EU 2=USA
-        if (value){
-          if (value==1) USA=false;
-          if (value==2) USA=true;
-        }
-        break;
-
       case 'q': // turn quiet mode on or off (don't report bad packets)
         quiet_mode = value;
         break;
