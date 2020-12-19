@@ -2,14 +2,8 @@ void RF_Setup(){
 	//--------------------------------------------------Initalize RF and send out RF test packets--------------------------------------------------------------------------------------------  
   delay(10);
   rf12_initialize(nodeID, RF_freq, networkGroup);                          // initialize RFM12B/rfm69CW
-   for (int i=10; i>=0; i--)                                                                  //Send RF test sequence (for factory testing)
-   {
-     emonPi.power1=i; 
-     rf12_sendNow(0, &emonPi, sizeof emonPi);
-     delay(100);
-   }
   rf12_sendWait(2);
-  emonPi.power1=0;
+
  //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
 
@@ -112,7 +106,7 @@ static void handleInput (char c) {
         break;
 
       case 'v': // print firmware version
-        Serial.print(F("[emonPi.")); Serial.print(firmware_version*0.1); Serial.print(F("]"));
+        Serial.print(F("[emonRx.")); Serial.print(firmware_version*0.1); Serial.print(F("]"));
         break;
 
       case 'a': // send packet to node ID N, request an ack
@@ -142,8 +136,6 @@ static void handleInput (char c) {
       Serial.print(F(" q")); 
       Serial.print(quiet_mode);
     }
-    Serial.print(F(" USA ")); Serial.print(USA);
-    Serial.println(F(" "));
     
     }
   value = top = 0;

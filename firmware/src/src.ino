@@ -63,16 +63,6 @@ byte RF_freq=RF12_433MHZ;                                        // Frequency of
 byte nodeID = 5;                                                 // emonpi node ID
 int networkGroup = 210;
 
-/*
-typedef struct {
-int power1;
-int power2;
-int power1_plus_2;
-int Vrms;
-int temp[MaxOnewire];
-unsigned long pulseCount;
-} PayloadTX;                                                    // create JeeLabs RF packet structure - a neat way of packaging data for RF comms
-PayloadTX emonPi;*/
 //-------------------------------------------------------------------------------------------------------------------------------------------
 
 unsigned long now =0;
@@ -142,8 +132,6 @@ void loop()
     rf12_initialize(nodeID, RF_freq, networkGroup);                             // Periodically reset RFM69CW to keep it alive :-(
     last_rf_rest = now;
   }
-
-    send_emonpi_serial();                                             //Send emonPi data to Pi serial using struct packet structure
 
 
 } // end loop---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
