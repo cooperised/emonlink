@@ -49,9 +49,9 @@ void send_RF(){
 
 	if (cmd && rf12_canSend() ) {                                                //if command 'cmd' is waiting to be sent then let's send it
 	    digitalWrite(LEDpin, HIGH); delay(200); digitalWrite(LEDpin, LOW);
-	    showString(PSTR(" -> "));
+	    Serial.print(" -> ");
 	    Serial.print((word) sendLen);
-	    showString(PSTR(" b\n"));
+	    Serial.println(" b");
 	    byte header = cmd == 'a' ? RF12_HDR_ACK : 0;
 	    if (dest)
 	      header |= RF12_HDR_DST | dest;
@@ -117,7 +117,7 @@ static void handleInput (char c) {
         break;
 
         default:
-          showString(helpText1);
+          Serial.print(helpText1);
       } //end case 
     //Print Current RF config  
 

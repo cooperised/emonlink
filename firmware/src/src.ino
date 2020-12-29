@@ -53,9 +53,7 @@ bool RF_STATUS=                 true;                                  // Turn R
 
 
 //----------------------------emonPi V3 hard-wired connections---------------------------------------------------------------------------------------------------------------
-const byte LEDpin=                     9;              // emonPi LED - on when HIGH
-const byte shutdown_switch_pin =       8;              // Push-to-make - Low when pressed
-const byte emonpi_GPIO_pin=            5;              // Connected to Pi GPIO 17, used to activate Pi Shutdown when HIGH
+const byte LEDpin=                     LED_BUILTIN;              // emonPi LED - on when HIGH
 //-------------------------------------------------------------------------------------------------------------------------------------------
 
 //-----------------------RFM12B / RFM69CW SETTINGS----------------------------------------------------------------------------------------------------
@@ -72,7 +70,6 @@ unsigned long last_rf_rest=0;                                  // Record time of
 static byte stack[RF12_MAXDATA+4], top, sendLen, dest;           // RF variables
 static char cmd;
 static word value;                                               // Used to store serial input
-long unsigned int start_press=0;                                 // Record time emonPi shutdown push switch is pressed
 bool quiet_mode = true;
 
 const char helpText1[] PROGMEM =                                 // Available Serial Commands
@@ -96,7 +93,16 @@ void setup()
 
   delay(100);
 
-  emonPi_startup();                                                     // emonPi startup proceadure, check for AC waveform and print out debug
+  pinMode(LEDpin, OUTPUT);
+  digitalWrite(LEDpin,HIGH);
+
+  Serial.begin(BAUD_RATE);
+  delay(2500);
+
+  Serial.print(F("emonRX V")); Serial.println(firmware_version*0.01);
+  Serial.println(F("Andy Pomfret"));
+  Serial.println(F("startup..."));
+
   RF_Setup();
   
   delay(2000);
@@ -110,11 +116,6 @@ void setup()
 void loop()
 {
   now = millis();
-
-  if (digitalRead(shutdown_switch_pin) == 0 )
-    digitalWrite(emonpi_GPIO_pin, HIGH);                                          // if emonPi shutdown butten pressed then send signal to the Pi on GPIO 11
-  else
-    digitalWrite(emonpi_GPIO_pin, LOW);
 
   if (Serial.available()){
     handleInput(Serial.read());                                                   // If serial input is received
@@ -138,11 +139,11 @@ void loop()
 
 void single_LED_flash()
 {
-  digitalWrite(LEDpin, HIGH);  delay(50); digitalWrite(LEDpin, LOW);
+  digitalWriteFast(LEDpin, HIGH);  delay(50); digitalWriteFast(LEDpin, LOW);
 }
 
 void double_LED_flash()
 {
-  digitalWrite(LEDpin, HIGH);  delay(25); digitalWrite(LEDpin, LOW);
-  digitalWrite(LEDpin, HIGH);  delay(25); digitalWrite(LEDpin, LOW);
+  digitalWriteFast(LEDpin, HIGH);  delay(20); digitalWriteFast(LEDpin, LOW); delay(10);
+  digitalWriteFast(LEDpin, HIGH);  delay(20); digitalWriteFast(LEDpin, LOW);
 }
