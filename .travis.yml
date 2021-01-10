@@ -10,6 +10,7 @@ install:
 
 script:
 - pio --version
+- pio update
 - platformio run -d firmware -e emonrx
 
 deploy:
