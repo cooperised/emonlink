@@ -30,10 +30,8 @@
 #define RF69_COMPAT 1                                                 // Set to 1 if using RFM69CW or 0 is using RFM12B
 
 #include <JeeLib.h>                                                   // https://github.com/openenergymonitor/jeelib
-#include <avr/pgmspace.h>
+
 #include <util/parity.h>
-// ISR(WDT_vect) { Sleepy::watchdogEvent(); }                            // Attached JeeLib sleep function to Atmega328 watchdog -enables MCU to be put into sleep mode inbetween readings to reduce power consumption
-// #FIXME
 
 //----------------------------emonRX Firmware Version---------------------------------------------------------------------------------------------------------------
 // Changelog: https://github.com/openenergymonitor/emonpi/blob/master/firmware/readme.md
@@ -119,12 +117,12 @@ void loop()
 
   if (Serial.available()){
     handleInput(Serial.read());                                                   // If serial input is received
-    double_LED_flash();
+    LED_flash();
   }
 
 
   if (RF_Rx_Handle()==1) {                                                      // Returns true if RF packet is received
-     double_LED_flash();
+     LED_flash();
   }
 
   send_RF();                                                                    // Transmitt data packets if needed
@@ -137,13 +135,7 @@ void loop()
 
 } // end loop---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void single_LED_flash()
+void LED_flash()
 {
-  digitalWriteFast(LEDpin, HIGH);  delay(50); digitalWriteFast(LEDpin, LOW);
-}
-
-void double_LED_flash()
-{
-  digitalWriteFast(LEDpin, HIGH);  delay(20); digitalWriteFast(LEDpin, LOW); delay(10);
   digitalWriteFast(LEDpin, HIGH);  delay(20); digitalWriteFast(LEDpin, LOW);
 }
